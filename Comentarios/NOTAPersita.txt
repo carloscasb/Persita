@@ -1,0 +1,331 @@
+site
+https://github.com/react-native-async-storage/async-storage
+React Native.dev -> Get Started -> environment Setup
+->Setting up the development environment
+
+-->  React Native CLI Quickstart ->Windows->Android
+
+-->Instalar Chocolaty -> Get Startes ---AGORA USA O POWSHEL (administrador)
+# Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = 
+[System.Net.ServicePointManager]::
+SecurityProtocol -bor 3072; iex 
+((New-Object System.Net.WebClient).
+DownloadString('https://community.chocolatey.org/install.ps1'))
+
+# choco install -y nodejs.install openjdk8
+
+-->Instalat Android Studio
+
+--> Configurar variaveis de ambientes
+
+ANDROID_HOME -> C:\Users\barbosa\AppData\Local\Android\Sdk
+
+path ->usuario ---C:\Users\barbosa\AppData\Local\Android\Sdk\platform-tools
+
+1- INICIO APP
+---> ABRE PRONT DE COMANDO - No diretório desejado
+
+# npx react-native init PrimeiroProject
+
+2 - USAR EDITOR DE CODIGO _ Visual studio\sublime
+--Abre o folder do app (pasta)
+
+3 - Para RODAR
+
+# npx react-native run-android
+
+4---Bibliotecas USADAS
+
+5---APAGAR App.js e VAMOS APRENDER
+---Forma 1 - de criar função
+import React, {component} from "react";
+import {View, Text, TextInput, StyleSheet, TimePickerAndroid, TouchableOpacity} from 'react-native';
+
+export  default  function App1(){
+return(
+  <View>
+
+    <View>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+    </View>
+
+      <View>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+    </View>
+
+    </View>
+);
+
+};
+
+---Forma 2 - de criar Class
+
+import React, {component} from "react";
+import {View, Text, TextInput, StyleSheet, TimePickerAndroid, TouchableOpacity} from 'react-native';
+
+/*
+const App1 = () => {
+  return (
+    <View>
+
+    <View>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+    </View>
+
+      <View>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+    </View>
+
+    </View>
+  );
+}
+
+export default App1;
+*/
+
+
+---Forma 3 - de criar Class
+/*
+ESSA NÂO DEU CERTO
+
+export default class App1 extends component{
+render(){
+return(
+   <View>
+    <Text>oi meu DEUS</Text>
+    
+  </View>
+);
+
+}
+  
+}
+
+*/
+
+5----Ficamos com a PRIMEIRA - compomente de função 
+-----NOSSO App.js
+import React from "react";
+import {View, Text} from 'react-native';
+
+export  default  function App1(){
+return(
+  <View>
+
+    <View>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+    </View>
+
+      <View>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+      <Text>oi meu DEUS</Text>
+    </View>
+
+    </View>
+);
+};
+
+6---VAMOS FZER NOSSO PRIMEIRO COMPONNTES (Cria a PASTA RAIZ Compomentes->comp1.js)
+
+import React from "react";
+import {View, Text} from 'react-native';
+
+//Posso omitir o nome da função--comp1
+
+export default function (){
+
+    return (
+        <Text>oi meu DEUS</Text>
+
+    );
+}
+
+-----JÁ é um componentes (Um campo Text com algo escrito)
+
+7-- Importar (Pegar o componentes no App.js)
+//import React, {component} from "react";
+import React from "react";
+import {View, Text} from 'react-native';
+//Importa o componente Não precisa ser o mesmo nome (Usei C1) e usa no return
+import C1 from './componentes/comp1' 
+
+export  default  function App1(){
+return(
+  <View>
+   <C1/>
+  </View>
+); 
+
+8--- Estilização CSS ou js
+---Estilizando no proprio codigp do componente
+----e DEPOIS APLICAR no proprio componente o estilos.txt1 (Text)
+---Temos que criar uma classe const estilos e definir toda a estilização
+--Declarar StyleSheet no import react-native
+
+---FICA ASSIM o comp1import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+
+//Posso omitir o nome da função--comp1
+export default function (){
+
+    return (
+        <Text style={estilos.txt1}>oi meu DEUS</Text>
+
+    );
+}
+
+const estilos = StyleSheet.create({
+
+txt1:{
+    color:'#f00',
+         
+    }
+});
+
+----SE QUISSEMOS FAZER A ESTILIIZAÇAO DO CI VAMOS TER QUE FAZER 
+NA VIEW App.js 
+--Não esquecer de Importar o StyleSheet, Usei conteiner na View
+
+//import React, {component} from "react";
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+//Importa o componente Não precisa ser o mesmo nome (Usei C1) e usa no return
+import C1 from './componentes/comp1' 
+
+export  default  function App1(){
+return(
+  <View style={estilos.conteiner} >
+    <C1/>
+    <C1/>
+    <C1/>
+    <C1/>
+    <Text style={estilos.txt0}>Vai dar tudo Certo</Text>
+    </View>
+);
+};
+
+const estilos = StyleSheet.create({
+
+  conteiner:{
+    flex:1,
+    backgroundColor:'#444',
+    alignItems:'center',
+    justifyContent:'center',
+    
+     },
+
+  txt0:{
+      color:'#a00',
+      fontSize:20,
+       }
+  
+  
+  });
+  
+9----PARA APLICAR UMA FORMATAÇÂO EM LINE 
+FICA ASSIM, COM UMA CHAVE A MAIS -- Vamos criar outro texto e fazer a formatação
+ <View style={estilos.conteiner} >
+    <C1/>
+    <C1/>
+    <C1/>
+    <C1/>
+    <Text style={estilos.txt0}>Vai dar tudo Certo</Text>
+    <Text style={{color:'#fff', fontSize:40}}>Com a bença do Senhor</Text>
+    </View>
+
+10----  PASSAR VALORES PARA OS COMPONENTES
+vamos passar propriedades para C1 (curso) na View App.js e interceptar la no comp1.js
+
+--Passar App.js
+    <C1 curso="Cavalo" nota="10" />
+    <C1 curso="gato" nota="10" />
+    <C1 curso="cachorro" nota="10" />
+    <C1 curso="abelhas" nota="10"/>
+
+ ---Pegar comp1.js  (vamos dizer que queremos usar o props (propriedades) na função
+ e pegar entre parentes {props.propriedade} 
+ OBS: Pode pegar mais de uma propriedade
+
+ export default function (props){
+
+    return (
+         <Text style={estilos.txt1}>Nossos aninais: {props.curso} Nota - {props.nota}</Text>
+
+
+    );
+}
+
+11---CSS externo --CRIAR EM RAIZ UMA PASTA estilos->Estilos.js
+
+// COMO é uma pasta de estilos para serem exportados não precisa de 
+//React - precisamos somente do StyleSheet do react-native
+//import React from "react";
+import {StyleSheet} from 'react-native';
+
+//Posso omitir o nome da função--comp1
+export default StyleSheet.create({
+    conteiner:{
+        flex:1,
+        backgroundColor:'#fff',
+        alignItems:'center',
+        justifyContent:'center',
+        
+         },
+
+         textoCurso:{
+             color:'#00f',
+             fontSize:15,
+
+            },
+
+            textoPadrao:{
+                color:'#fff',
+                fontSize:20,
+   
+               },
+    
+            textoTitulo:{
+                color:'#f00',
+                fontSize:20,
+   
+               },
+
+
+
+});
+
+---para ser cghamado (usado) no componentes comp1.js (apaga o estilo que tem la) e Importa
+o Estilos.js da pasta (caminho)--
+OBS: Os dois pontinho sugnifica que vai para a pasta refencia em diante
+
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from '../estilos/Estilos.js';
+
+//Posso omitir o nome da função--comp1
+export default function (props){
+
+    return (
+        <Text style={Estilos.textoCurso}>Nossos aninais: {props.curso} Nota - {props.nota}</Text>
+
+    );
+}
+
+---para ser chamado (usado) no componentes App.js (apaga o estilo ---const estilos = StyleSheet.create({ --- que tem la) e Importa
+o Estilos.js da pasta (caminho)-- OBS: o App.js esta no mesmo nivel da pasta estilos estã é apenas um ponto
+
+
+
+  
+12---AULA 8
