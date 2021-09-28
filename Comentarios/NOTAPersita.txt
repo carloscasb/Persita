@@ -324,8 +324,154 @@ export default function (props){
 
 ---para ser chamado (usado) no componentes App.js (apaga o estilo ---const estilos = StyleSheet.create({ --- que tem la) e Importa
 o Estilos.js da pasta (caminho)-- OBS: o App.js esta no mesmo nivel da pasta estilos estã é apenas um ponto
+//import React, {component} from "react";
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+//Importa o componente Não precisa ser o mesmo nome (Usei C1) e usa no return
+import C1 from './componentes/comp1' 
+import Estilos from './estilos/Estilos.js';
+export  default  function App1(){
+return(
+  <View style={Estilos.conteiner} >
+    <C1 curso="Cavalo" nota="10" />
+    <C1 curso="gato" nota="10" />
+    <C1 curso="cachorro" nota="10" />
+    <C1 curso="abelhas" nota="10"/>
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    </View>
+);
+};
 
 
 
   
-12---AULA 8
+12---Elementos Responsivos, contêiners Flex (Caixas)
+---Vamos criar um novo componentes->Caixas
+--Vamos usar somente  View com style emline (style={{}} ) Dois cochetes
+--INICIALMENTE VAMOS USAR UM VIEW COM 100% (ocupa todo espaço e DENTRO DELA OUTRAS TRES VIEW COLORIDAS)
+
+import React from "react";
+import { View } from 'react-native';
+//Posso omitir o nome da função--comp1
+export default function (props){
+
+    return (
+      <View style={{width:'100%'}}>
+          <View style={{width:50, height:50, backgroundColor:'#0ff'}}></View>
+          <View style={{width:50, height:50, backgroundColor:'#f00'}}></View>
+          <View style={{width:50, height:50, backgroundColor:'#00f'}}></View>
+
+      </View>
+    );
+}
+----- AGORA VAMOS IMPORTAR PARA App.js (import Caixas from './componentes/Caixas' )
+--VAMOS TIRAR TAMBEM O impor C1 e OS C1 de dentro da View (<View style={Estilos.conteiner} >)
+---E colocar nosso COMPONENTE Caixas  (beja que não finalizei com a extensão)
+
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+//Importa os componentes necessarios - Não precisa ser o mesmo nome (Usei C1) e usa no return
+//import Caixas from './componentes/comp1' 
+import Caixas from './componentes/Caixas' 
+import Estilos from './estilos/Estilos.js';
+export  default  function App1(){
+return(
+  <View style={Estilos.conteiner} >
+    <Caixas/>
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    </View>
+);
+};
+
+---OK PERFEITO
+
+---VAmos mexer um Pouco co as propriedade do Nosso componente Caixas
+
+-- <View style={{width:'100%', flexDirection:'row'}}>  ----- FICA NA HORIZONTAL e row na vertical ---temos os 
+ reverse dos dois.
+----<View style={{width:'100%', flexDirection:'row', justifyContent:'center'}}> --DISTRIBUI AO LONGO DA TELA
+---<View style={{width:'100%', height:'100%', flexDirection:'row', alignItems:'center', justifyContent:'center'}}> --POSICIONAMENTO vertical
+EIXO SEGUNDARIO
+
+PARA POSICIONAR NO EIXO SEGUDARIO (Y) tem que ter o height  ---se for porcetage, ente aspas simples '' e se em numero
+sem nada.
+ --Ficou ASSIM
+ import React from "react";
+import { View } from 'react-native';
+
+
+//Posso omitir o nome da função--comp1
+export default function (props){
+
+    return (
+      <View style={{width:'100%', height:300, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+          <View style={{width:50, height:50, backgroundColor:'#0ff'}}></View>
+          <View style={{width:50, height:50, backgroundColor:'#f00'}}></View>
+          <View style={{width:50, height:50, backgroundColor:'#00f'}}></View>
+
+      </View>
+    );
+}
+
+13----Renderização Condicional do Componentes.
+--FAZ em App.js  uma função (fexibir) que recebe uma paametro (vp1) e decide se ele vai exibir ou não
+e depois chama ela na função App1 dentro das View ---{fexibir (true)} INICIALMENTE como verdadeira
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+//Importa os componentes necessarios - Não precisa ser o mesmo nome (Usei C1) e usa no return
+//import Caixas from './componentes/comp1' 
+import Caixas from './componentes/Caixas' 
+import Estilos from './estilos/Estilos.js';
+
+
+function fexibir(vp1){
+  if (vp1){
+        return(<Text>Vou aparecer ou não</Text>)
+
+  }else{
+    return(<Text>------</Text>)
+  }
+}
+
+
+export  default  function App1(){
+return(
+  <View style={Estilos.conteiner} >
+    <Caixas/>
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    {fexibir (true)} 
+    </View>
+);
+};
+
+---OH PERFEITO - se for false dar certo TAMBEM
+--PODE SER CO ARRAY Functio tambem
+const fexibir = (vp1) =>{
+  if (vp1){
+        return(<Text>Vou aparecer ou não</Text>)
+
+  }else{
+    return(<Text>------</Text>)
+  }
+}
+
+-------DAR O MESMO RESULTADO e ainda pode ser por uma variavel tirando as funcção ça de cima
+export  default  function App1(){
+  var fexibir = true;
+return(
+  <View style={Estilos.conteiner} >
+    <Caixas/>
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    {fexibir?<Text>Vou aparecer ou não</Text>:<Text>------</Text>}
+    </View>
+);
+};
+
+--------Continua aula 10 em 5 min
+
+
+14--Imagem
