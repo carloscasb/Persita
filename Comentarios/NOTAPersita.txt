@@ -460,7 +460,7 @@ const fexibir = (vp1) =>{
 
 -------DAR O MESMO RESULTADO e ainda pode ser por uma variavel tirando as funcção ça de cima
 export  default  function App1(){
-  var fexibir = true;
+  let fexibir = true;
 return(
   <View style={Estilos.conteiner} >
     <Caixas/>
@@ -471,7 +471,255 @@ return(
 );
 };
 
---------Continua aula 10 em 5 min
+--------E ainda podemos fazer em codicional em duas etapas com o operador &&
+export  default  function App1(){
+  let fexibir = false;
+return(
+  <View style={Estilos.conteiner} >
+    <Caixas/>
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    {fexibir?<Text>Vou aparecer ou não</Text>:<Text>------</Text>}
+    {fexibir && <Text>Vou aparecer ou não</Text>}
+    </View>
+
+ ----VAMOS DAR UMA PROPRIEDADE(exibir)AO COMPONENTE Caixas  e  importar em COMPONENTE Caixas
+---em App.js
+export  default  function App1(){
+  let fexibir = true;
+return(
+  <View style={Estilos.conteiner} >
+    <Caixas exibir={fexibir} />
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    {fexibir?<Text>Vou aparecer ou não</Text>:<Text>------</Text>}
+    {fexibir && <Text>Vou aparecer ou não</Text>}
+    </View>
+
+---Em Caixas.js vamos primeiramnete aumemtar a view e fazer uma nova distribuição---
+---Poderia ter sido feito antes  FICA ASSIM:
+import React from "react";
+import { View } from 'react-native';
 
 
-14--Imagem
+//Posso omitir o nome da função--comp1
+export default function (props){
+
+    return (
+      <View style={{width:'100%', height:300, flexDirection:'column', justifyContent:'space-between'}}>
+          <View style={{ flexGrow:1 , backgroundColor:'#0ff'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#f00'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#00f'}}></View>
+
+          <View style={{ flexGrow:1 , backgroundColor:'#0ff'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#f00'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#00f'}}></View>
+
+      </View>
+    );
+}
+
+--------LISTADO extendido na horizontal  --vamos continuar com a redirencionalização CONDICIONAL
+----No COMPOMENTE Caixas
+--Colocamos a propriedade props.exibir ? na View e busca um ou outro dependendo do estado (trie ou false)
+la na App.js
+
+import React from "react";
+import { View } from 'react-native';
+
+
+//Posso omitir o nome da função--comp1
+export default function (props){
+
+    return (
+      <View style={{width:'100%', height:300, flexDirection:'column', justifyContent:'space-between'}}>
+
+        {
+      props.exibir ?
+          <View style={{flex:1,}}>
+          <View style={{ flexGrow:1 , backgroundColor:'#0ff'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#f00'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#00f'}}></View>
+          </View>
+          :
+          <View style={{flex:1,}}>
+          <View style={{ flexGrow:1 , backgroundColor:'#0ff'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#f00'}}></View>
+          <View style={{ flexGrow:1 , backgroundColor:'#000'}}></View>
+          </View>
+        }
+
+      </View>
+    );
+}
+
+-----
+
+14--IMAGEM - para nossa imagems vamos criar na RAIZ a pasta assets
+e colocar nossa imagens, alé disso tem que import (declarar ) la em cima
+import React from "react";
+---import {StyleSheet, View, Text, Image} from 'react-native';
+
+export  default  function App1(){
+  let fexibir = true;
+return(
+  <View style={Estilos.conteiner} >
+   <Image source={require('./assets/hdc1.png')} />
+    <Caixas exibir={fexibir} />
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    {fexibir?<Text>Vou aparecer ou não</Text>:<Text>------</Text>}
+    {fexibir && <Text>Vou aparecer ou não</Text>}
+    </View>
+    
+);
+};
+----Estilizando 
+  <Image source={require('./assets/hdc1.png')}
+    style={{ width: 140, height: 140 }}
+   />
+
+-------
+<Image source={require('./assets/hdc1.png')}
+    style={{ width: 250, resizeMode:'contain' }}
+   />
+------
+<Image source={{ uri:'http://hdc1.com'}}
+    style={{ width: 250, resizeMode:'contain' }}
+   />
+
+15------Arrow Function ---VAMOS em (App.js) para estudar Arrow Function 
+---FORMA MAIS SIMPLES DE CODIFICAR UMA FUNÇÃO
+--faz a função 
+ -----FUNÇÃO DOBRO-----------
+function dobro(n){
+return n*2
+}
+
+--E chama onde quizer dentro de um compomente ou elemento , vou usar uma caixa de texto
+ <Text> {dobro (2)}</Text>
+
+ -----FUNÇÃO SOMA-----------
+function soma(n1,n2){
+return (n1+n2)
+}
+
+--Chama 
+<Text> {soma (2,4)}</Text>
+
+---PODEMOS FAZER ARRAY function (não damos nome e sim uma SETA) DESTA DUAS função
+
+()=>{}  -----Pegando os paramentros no parentes e passando para o corpo da função
+
+--- Quanto tivemos somente um paramentros não precisamos indicamos no parentes
+---- a função DOBRO pode ser escrita assim --Atribuimos o corpo da função a uma constante
+const dobro=(n)=>{
+return n*2
+}
+---PODEMOS reduzir ainda mais (pois a função DOBRO só tem um (1) paramentros -- podemos omitir-la e tirar os parentes)
+const dobro=n=>n*2
+}
+
+-----E A Functio SOMA FICA ASSIM ASSIM 
+
+const soma=(n1,n2)=>n1+n2
+  }
+
+  ---O RESULATDO É O MESMO
+
+  16 --BUTTON --
+  ---O botão precisa das propriedades 
+ <Button
+      title="mostrar mensagem"
+      //Sua funcionalidade, no caso chamamos uma array fuction de alerta
+       onPress={()=>Alert.alert ('MSG','aprendendo a persitir')}
+    />
+
+----PODEMOS USAR O BOTÃO PARA CHAMA UMA FUNçÂO CRIADA
+
+----função CRIADA-
+function msg(){
+   Alert.alert ('MSG','puxando função')
+}
+
+---chamada da Função no Button
+<Button
+      title="Puxar função"
+      //Sua funcionalidade, no caso chamamos uma array fuction de alerta
+      onPress={msg}
+    />
+
+---PODER SER UMA Arrow fuction    
+
+---------NESSE MOMENTO NOSSA View App.js ESTA ASSIM (poluida para Estudo)
+
+import React from "react";
+import {StyleSheet, View, Text, Image, Button, Alert} from 'react-native';
+//Importa os componentes necessarios - Não precisa ser o mesmo nome (Usei C1) e usa no return
+//import Caixas from './componentes/comp1' 
+import Caixas from './componentes/Caixas' 
+import Estilos from './estilos/Estilos.js';
+
+
+const dobro=n=>n*2
+const soma=(n1,n2)=>n1+n2
+
+/*
+function fexibir(vp1){
+  if (vp1){
+        return(<Text>Vou aparecer ou não</Text>)
+
+  }else{
+    return(<Text>------</Text>)
+  }
+}
+*/
+/*  PODER SER ARRAYfunction
+const fexibir = (vp1) =>{
+  if (vp1){
+        return(<Text>Vou aparecer ou não</Text>)
+
+  }else{
+    return(<Text>------</Text>)
+  }
+}
+*/
+
+function msg(){
+   Alert.alert ('MSG','puxando função')
+}
+
+export  default  function App1(){
+  let fexibir = true;
+return(
+  <View style={Estilos.conteiner}>
+    <Button
+      title="mostrar mensagem"
+      //Sua funcionalidade, no caso chamamos uma array fuction de alerta
+      onPress={()=>Alert.alert ('MSG','aprendendo a persitir')}
+    />
+    <Button
+      title="Puxar função"
+      //Sua funcionalidade, no caso chamamos uma array fuction de alerta
+      onPress={msg}
+    />
+   <Image source={require('./assets/hdc8.png')}
+    style={{ width: 250, resizeMode:'stretch' }}
+   />
+   <Text> {dobro (2)}</Text>
+   <Text> {soma (2,4)}</Text>
+    <Caixas exibir={fexibir} />
+    <Text style={Estilos.textoPadrao}>Vai dar tudo Certo</Text>
+    <Text style={Estilos.textoTitulo}>Com a bença do Senhor</Text>
+    {fexibir?<Text>Vou aparecer ou não</Text>:<Text>------</Text>}
+    {fexibir && <Text>Vou aparecer ou não</Text>}
+    </View>
+    
+);
+};
+
+OBS: O BUTTON é basicão
+
+---VAMOS FAZER UMA LIMPA NO NOSSO CODIGO
+
+17---FlatList, lista plana
