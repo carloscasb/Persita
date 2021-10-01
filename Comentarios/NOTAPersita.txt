@@ -721,5 +721,580 @@ return(
 OBS: O BUTTON é basicão
 
 ---VAMOS FAZER UMA LIMPA NO NOSSO CODIGO
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+
+export  default  function App1(){
+ 
+return(
+  <View style={Estilos.conteiner}>
+    <Text >Vai dar tudo Certo</Text>
+    <Text >Com a bença do Senhor</Text>
+    
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     }
+ });
+
 
 17---FlatList, lista plana
+---VAMOS EM COMPONENTES e Criamos um componente chamado ListaPlana.js
+import React from "react";
+import { View, Text, FlatList} from 'react-native';
+
+
+export default function (){
+
+return (
+    <View>
+
+        
+    </View>
+
+)}
+
+----E depois faremos a chamada desse componente em App.js para isso precisamos
+primeiramente importalo para o App.js ---(import Lp from './componentes/ListaPlana';)--
+e depois chamarlo dentro do codigo <Lp/>
+
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import Lp from './componentes/ListaPlana';
+
+export  default  function App1(){
+ 
+return(
+  <View style={Estilos.conteiner}>
+    <Text >Vai dar tudo Certo</Text>
+    <Text >Com a bença do Senhor</Text>
+    <Lp/>
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     }
+
+   
+  });
+
+---AGORA VAMOS PREPARAR UMA COLEÇÃO DE DADOS  (no ListaPlana.js) com os elementos que queremos
+mostrar na lista e depois fazer o FlatList dentro da View , para isso precisamos
+configurar tres (3) paramentros no FlatList ()
+--Volta no ListaPlana.js
+import { isTemplateElement } from "@babel/types";
+import React from "react";
+import { View, Text, FlatList} from 'react-native';
+
+// CRIAR uma array Produtos
+const Produtos = [
+    {
+      id:'001',
+      desc:['mouse', '25.00']
+    },
+    {
+    id:'002',
+    desc:['teclado', '35.00']
+    },
+    {
+    id:'003',
+    desc:['monitor', '50.00']
+    },
+    
+    ]
+
+export default function (){
+
+return (
+    <View>
+        <FlatList
+
+        // DE ONDE VEM OS DADOS
+            data={Produtos}
+        // A chave que queremos pegar (id), pega numa array function
+        keyExtractor={item=>item.id}
+        // E pegar as descrições que são uma array, posição 0 e posição 1 --- pegar (desc), pega numa array function
+        // Usamos parentes pois tem mais de 1 e retorne um text, contendo a descrição e o valor do produto
+        renderItem={({item})=><Text>Descrição:{item.desc[0]} - Valor:{item.desc[1]} </Text>}
+
+        />
+
+    </View>
+
+)}
+
+---- COMO ESTA CHAMADO LA NO App.js DEU CERTO
+OBS:  TUDO AINDA ESTA SEM LIMITES NA TELA (não estamos com uso do SafeAreaview)
+poderia criar uma margin top no estilos.conteiner
+
+---ESTILIZAR A LISTA PLANA
+--Declara StyleSheet la em cima (import) e colocar uma view no texto que vai mostrar o produto
+isso é o texto vai ficar denro de uma view
+// Usamos parentes pois tem mais de 1 e retorne um text, contendo a descrição e o valor do produto
+        renderItem={({item})=><View><Text>Descrição:{item.desc[0]} - Valor:{item.desc[1]} </Text></View>}
+
+---FICAR ASSIM
+
+import { isTemplateElement } from "@babel/types";
+import React from "react";
+import {StyleSheet, View, Text, FlatList} from 'react-native';
+
+// CRIAR uma array Produtos
+const Produtos = [
+    {
+      id:'001',
+      desc:['mouse', '25.00']
+    },
+    {
+    id:'002',
+    desc:['teclado', '35.00']
+    },
+    {
+    id:'003',
+    desc:['monitor', '50.00']
+    },
+    
+    ]
+
+export default function (){
+
+return (
+    <View>
+        <FlatList
+
+        // DE ONDE VEM OS DADOS
+            data={Produtos}
+        // A chave que queremos pegar (id), pega numa array function
+        keyExtractor={item=>item.id}
+        // E pegar as descrições que são uma array, posição 0 e posição 1 --- pegar (desc), pega numa array function
+        // Usamos parentes pois tem mais de 1 e retorne um text, contendo a descrição e o valor do produto
+        renderItem={({item})=><View style={estilos.item}><Text style={estilos.prod}>Descrição:{item.desc[0]} - Valor:{item.desc[1]} </Text></View>}
+
+        />
+
+    </View>
+
+)}
+
+const estilos = StyleSheet.create({
+    item:{
+
+     backgroundColor:'#aaa',
+     padding:15,
+     marginVertical:8,
+     marginHorizontal:16
+      
+       },
+       prod:{
+
+      fontSize:20,
+      color:'#fff'
+         
+          }
+     
+    });
+  ---OK PERFEITO
+
+
+  18---Como inserir imagem de fundo no aplicativo, ImageBackground
+
+  --Criei um fundo de 660 por 440
+  --- fazer o import do ImageBackground
+  ---E criar uma constante (const) apontando o caminho
+  --- Coloca o ImageBackground dentro da view na App.js e temos que configurar o source e o style do nosso componente
+
+import React from "react";
+import {StyleSheet, View, Text, ImageBackground} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import Lp from './componentes/ListaPlana';
+ 
+const imgbg1='./assets/imagens/fundo1.png'
+const imgbg2='./assets/imagens/fundo2.png'
+
+
+
+export  default  function App1(){
+ 
+return(
+  <View style={Estilos.conteiner}>
+    <ImageBackground
+    source={require(imgbg2)}
+    style={estilos.imagemfundo }
+    
+    >
+    <Text >Vai dar tudo Certo</Text>
+    <Text >Com a bença do Senhor</Text>
+    <Lp/>
+    </ImageBackground>
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+       width:'100%'
+       
+        }
+
+   
+  });
+
+--Se quisser mudar a imagem é so mudar o arquivo no final do caminho
+--OK PERFEITO
+
+
+19---State em React Native - Componente Funcional
+--VAMOS LIMPAR NOVAMENTE O App.js
+
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+export  default  function App1(){
+ 
+return(
+  <View style={Estilos.conteiner}>
+    
+     <View>
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+    </View>
+   
+   
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+
+       
+        }
+
+   
+  });
+
+
+---VAMOS COMEÇAR O STATE ---OS componetes não consegue interagir com variavel , por isso prexisamos do STATE
+---manipular o estado do componentes
+---Declaramos (import useState) la em cima e Criar um state dentro do componente App1
+const [ligado, setLigado]=useState(true)
+----E pegar ele dentro da View atraves de uma array fuction
+import React, {useState} from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+
+export  default  function App1(){
+ 
+  //Define nome do estado e o nome da função, mostra que é um state atras do useState com o valor inicial
+  // Como se fosse uma variavel (ligado) com o valor (true)
+const [ligado, setLigado]=useState(false)
+
+return(
+  <View style={Estilos.conteiner}>
+    
+    {ligado?  // Se ele esta com valor de origem (true) rediriciona a view
+    <View>
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+    </View>
+    :  // Se NÃO  esta com valor de origem (true) rediriciona o TEXTO
+    <Text >* * *</Text>
+   }
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+
+       
+        }
+
+   
+  });
+------OK PERFEITO
+----Poderia ser feito com uma variavel comum , então faremos assim com um 
+componente (BUTTON) para manipular o state - por mei de uma array function na propriedade onPress.
+---Faz o import do Button la em cima
+import React, {useState} from "react";
+import {StyleSheet, View, Text, Button} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+
+export  default  function App1(){
+ 
+  //Define nome do estado e o nome da função, mostra que é um state atras do useState com o valor inicial
+  // Como se fosse uma variavel (ligado) com o valor (true)
+const [ligado, setLigado]=useState(false)
+
+return(
+  <View style={Estilos.conteiner}>
+    <Button
+      title= {ligado?"desligar":"Ligar"}
+      onPress={()=>setLigado(!ligado)}   // pega o valor de ligado e nega, se for false passa para true e vice-versa
+
+    />
+    
+    {ligado?  // Se ele esta com valor de origem (true) rediriciona a view
+    <View>
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+    </View>
+    :  // Se NÃO  esta com valor de origem (true) rediriciona o TEXTO
+    <Text >* * *</Text>
+   }
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+       
+        }
+   
+  });
+
+
+20-------State em React Native - Componente de Classe  ----- DEU ERRADO  xxxx  (corrigir o return)
+--VAMOS LIMPAR NOVAMENTE O App.js
+
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+export  default  function App1(){
+ 
+return(
+  <View style={Estilos.conteiner}>
+        
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+   
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+      
+        }
+ });
+
+ -------VAMOS CRIAR o COMPONENTE DE CLASSE EM componentes.CarroC.js 
+ e depois chamar-lo em App.js Não esquecenc=do de importar-lo
+
+ import React, { Component } from "react";
+import {Button, View, Text} from 'react-native';
+
+
+//Carro vai vim pela propriedade----- this.props.Valor da propriedade';
+//O ligado vai vim do state----- this.props.ESTADO DO STATE ---VERIFICA SE ESTA LAGADO OU NÃO 
+
+
+export default class Carro extends Component {
+    state={
+        ligado:true  //Pode ser mais de uma estado
+    }
+
+
+  render(props){  //Trabalhando co classe nunca esquecer do render e nesse caso vai passar propriedade
+        return (
+                <View>
+
+            
+            <Text >Carro:{this.props.nome}  -  Ligado:{this.state.ligado ? "Sim" : "Não"} </Text>
+                <Button
+                  // tanto o texto e button vai verificar o (state) estado ligado ? ai responde conforme o state
+                  title={this.state.ligado ? "Desligado" : "ligar"}  
+                 onPress={
+                        ()=>{this.setState({ligado:!this.state.ligado})}
+
+                 }
+                />
+                 </View>
+        )
+  }
+
+}
+
+
+-----------App.js
+
+
+
+import React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import CarroC from './componentes/CarroC.js'
+
+export  default  function App1(){
+ 
+return(
+  <View style={Estilos.conteiner}>
+     
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+       <CarroC nome="golf" />
+    </View>
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+------DEU ERRADO  xxxx  (corrigir o return)
+
+21----- REPETIR O STATE FUNCIONAL      -----DEU ERRADO xxxx  --Evento onPress
+--VOU CRIAR UM  COMPONTENTE em componentes.CarroF.js
+
+import React, { useState } from "react";
+import {Button, View, Text} from 'react-native';
+
+
+// Não usa o this.props
+//O ligado vai vim do state (-VERIFICA SE ESTA LAGADO OU NÃO )-----props.nome do CARRO --
+ 
+export default function(props) {
+
+    const [ligado,setLigado] = useState(true)
+
+        return (
+                <View>
+
+            
+                <Text > Carro:{props.nome}  -  Ligado:{ligado? "Sim" : "Não"} </Text>
+                <Button
+                  // tanto o texto e button vai verificar o (state) estado ligado ? ai responde conforme o state
+                  title={ligado? "Desligado" : "ligar"}  
+                 onPress={
+                   ()=>{setLigado(!ligado)}   // pega o valor de ligado e nega, se for false passa para true e vice-versa
+
+                 }
+                />
+                 </View>
+        )
+  }
+
+---E CHAMA NO App.js --com a devida import
+iimport React from "react";
+import {StyleSheet, View, Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import CarroF from "./componentes/CarroF.js";
+
+export  default  function App1(){
+ 
+return(
+
+  <View style={Estilos.conteiner}>
+    
+     <View> 
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+        <CarroF nome="Golf" />
+</View>
+
+    </View>
+  
+    
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+-----DEU ERRADO xxxx
+
+
+
+22------Componente Switch em React Native
+
