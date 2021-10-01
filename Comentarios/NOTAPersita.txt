@@ -1223,7 +1223,7 @@ const estilos = StyleSheet.create({
 
 ------DEU ERRADO  xxxx  (corrigir o return)
 
-21----- REPETIR O STATE FUNCIONAL      -----DEU ERRADO xxxx  --Evento onPress
+21----- REPETIR O STATE FUNCIONAL      -----DEU CERTO
 --VOU CRIAR UM  COMPONTENTE em componentes.CarroF.js
 
 import React, { useState } from "react";
@@ -1234,8 +1234,8 @@ import {Button, View, Text} from 'react-native';
 //O ligado vai vim do state (-VERIFICA SE ESTA LAGADO OU NÃO )-----props.nome do CARRO --
  
 export default function(props) {
-
-    const [ligado,setLigado] = useState(true)
+  useState
+    const [ligado, setLigado] = useState(true)
 
         return (
                 <View>
@@ -1244,18 +1244,15 @@ export default function(props) {
                 <Text > Carro:{props.nome}  -  Ligado:{ligado? "Sim" : "Não"} </Text>
                 <Button
                   // tanto o texto e button vai verificar o (state) estado ligado ? ai responde conforme o state
-                  title={ligado? "Desligado" : "ligar"}  
-                 onPress={
-                   ()=>{setLigado(!ligado)}   // pega o valor de ligado e nega, se for false passa para true e vice-versa
-
-                 }
+                  title= {ligado?"desligar":"Ligar"}
+      onPress={()=>setLigado(!ligado)}   
                 />
                  </View>
         )
   }
 
 ---E CHAMA NO App.js --com a devida import
-iimport React from "react";
+import React from "react";
 import {StyleSheet, View, Text} from 'react-native';
 import Estilos from './estilos/Estilos.js';
 import CarroF from "./componentes/CarroF.js";
@@ -1292,9 +1289,294 @@ const estilos = StyleSheet.create({
      }
   });
 
------DEU ERRADO xxxx
+
+-----DEU certo
 
 
 
-22------Componente Switch em React Native
+22------SAFEAREAVIEW - Define uma area de segurança - Passa a ser um CONTEINER
 
+----vamos subustituir no App.js a View pelo SafeAreaview (Declara antes)
+import React from "react";
+import {StyleSheet, View,  Text, SafeAreaView} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import CarroF from "./componentes/CarroF.js";
+
+export  default  function App1(){
+ 
+return(
+
+  <SafeAreaView style={Estilos.conteiner}>
+    
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+        <CarroF nome="Golf" />
+    </SafeAreaView>
+   
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+---(SSO NÃO MUDA EM NADA ATE AGORA - Mas fica sendo o conteiner)
+
+23----Componente Switch em React Native
+---DENTRO DO CARRO VAMOS USAR O Switch no lugar de BUTTON (declarar)
+---TEMOS qie definir algunas propriedades
+import React, { useState } from "react";
+import {Switch, View, Text, ProgressViewIOSComponent} from 'react-native';
+
+
+// Não usa o this.props
+//O ligado vai vim do state (-VERIFICA SE ESTA LAGADO OU NÃO )-----props.nome do CARRO --
+ 
+export default function(props) {
+  useState
+    const [ligado, setLigado] = useState(false)
+    const toggleLigado=()=>{setLigado(!ligado)} //pode usar o PrevesState -> !PrevesState
+ 
+        return (
+                <View>
+                <Text > Carro:{props.nome}  -  Ligado:{ligado? "Sim" : "Não"} </Text>
+                <Switch
+                  // Definir cor
+                  trackColor={{false:"#777", true:"#8bf"}}
+                   thumbColor={ligado? '#00f' :'#444' }
+                   // Definir Estado ---como ligado ta true --ele vai ligar
+                   // Se mudar para false - muda 
+                   value={ligado}
+                   // AGORA MUDA O ESTADO (evento) - vamos mudar de acordo com o clique no switch 
+                   //FAz atraves de uma array function
+                   onValueChange={
+                     // SERIA ISSO ----()=>{setLigado(!ligado)}
+                     // vamos fazer por uma função que condiciona (la em cima) a toggleLigado e USAR
+                     toggleLigado
+
+                   }
+
+
+
+                />
+                 </View>
+        )
+  }
+
+---OK PERFEITO
+
+
+24----Componente TextInput em React Native -CAIXA DE TEXTO
+---FAZER COMPONENTE componentes.CaixaTexto.js
+import React, {useState} from 'react';
+import {View, TextInput, Text } from 'react-native';
+
+export default function(){
+
+//para fazer a associação da CAIXA DE TEXTO com o nome precisamos de uma state
+ // declara um useState e tranformamos num state
+ // Inicialmente com um Nome vazio
+  const[nome, setNome]=useState("")
+ //AGORA pode associar o value do componente CAIXA DE TEXTO ao State
+ const mudarNome =()=>{setNome}
+return (
+    <View>
+            <Text >Digite seu Nome:</Text>
+            <TextInput
+          //EM Line
+            style={{borderWidth:1, borderBottomColor:'#000'}}
+            //ASSOCIANDO COM O STATE nome (mas não permite edição)---pois esta atrelado ao valor inial que é vazio
+            value={nome}
+           //Precisamos de um EVENTO --- pode ser uma funcção array fuctiom la em cima e chama aqui no EVENTO 
+           //Faremos diretamente aqui Vamos passar um Text para dentro da array fuction
+           // e atraves do setNome definir um texto desejado
+
+           onChangeText={text=>setNome(text)}
+
+           //tudo que digitamos vai para o state nome
+           
+           />
+
+            <Text>Valor digitado vai para state nome: {nome}</Text>
+    </View>
+
+)}
+
+----CHAMAR EM App.js
+import React from "react";
+import {StyleSheet, View,  Text, SafeAreaView} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import CxTx from  './componentes/CaixaTexto';
+
+export  default  function App1(){
+ return(
+
+  <SafeAreaView style={Estilos.conteiner}>
+    
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+       <CxTx/>
+    </SafeAreaView>
+   
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+
+25------Componente ScrollView em React Native  (AREA DE ROLAGEM)
+PODEMOS INCLUIR QUALQUE COISA DENTRO DA ScrollView
+---Vamos fazer o Compomentes.Rolagem.js
+
+import React from 'react';
+import {View, TextInput, Text, ScrollView } from 'react-native';
+
+export default function(){
+return (
+    <View style={{flex:1}}>
+        
+        <ScrollView style={{backgroundColor:'#333', padding:15, }}>
+        
+            <Text style={{color:'#eee', fontSize:40}}>
+            O arcebispo de Pouso Alegre (MG), dom José Luiz Majella Delgado, informou em comunicado que o papa Francisco "dispensou Ernani Maia dos Reis do celibato e de todas as demais obrigações inerentes ao estado clerical e decorrentes das Sagradas Ordens".... - Veja mais em 
+            </Text>
+
+        </ScrollView>
+
+    </View>
+
+)}
+
+----CHAMAR EM App.js
+import React from "react";
+import {StyleSheet, View,  Text, SafeAreaView} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import CxTx from  './componentes/CaixaTexto';
+
+export  default  function App1(){
+ return(
+
+  <SafeAreaView style={Estilos.conteiner}>
+    
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+       <CxTx/>
+    </SafeAreaView>
+   
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+26-----Componente Touchablehighlight em React Native
+---Vamos fazer o Compomentes.Toque.js
+----Vamos usar o useState, StyleSheet, TouchableHighlight
+PODEMOS INDICAR QUALQUE COISA DENTRO DA TouchableHighlight
+
+import React, {useState} from 'react';
+import {View, StyleSheet, Text, TouchableHighlight } from 'react-native';
+
+export default function(){
+
+//para fazer a interação com componentes variaveis  precisamos de uma state
+// Noosa state vai ser um contador iniciando com value 0
+const [Cont, setCont]=useState(0)
+//VAMOS FAZER a array Function  (contar) levar para onPress
+const contar=()=>{
+    setCont(Cont + 1)
+}
+
+return (
+    <View >
+        <TouchableHighlight style={estilos.botao}
+        // para associar com a interalão faremos um evento e criamos uma array fuction
+         //(diretamente aqui ou la em cima e chama aqui no EVENTO onPress)
+         //VAMOS FAZER LA EM CIMA NA Function e chamar aqui
+         onPress={contar}
+         underlayColor='#000'
+        >
+        <Text>America Sport</Text>
+        </TouchableHighlight>
+        <Text>{Cont}</Text>
+      
+    </View>
+
+)}
+const estilos = StyleSheet.create({
+    botao:{
+     alignItems:'center',
+     backgroundColor:'#ccc',
+     padding:15
+           
+       }
+    });
+----CHAMAR EM App.js
+import React from "react";
+import {StyleSheet, View,  Text, SafeAreaView} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+import Toque from './componentes/Toque'
+
+export  default  function App1(){
+ return(
+
+  <SafeAreaView style={Estilos.conteiner}>
+    
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+       <Toque/>
+
+    </SafeAreaView>
+   
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+27-------Componente Modal em React Native---AULA 22
