@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Button, View, Text} from 'react-native';
+import {Switch, View, Text, ProgressViewIOSComponent} from 'react-native';
 
 
 // Não usa o this.props
@@ -7,17 +7,30 @@ import {Button, View, Text} from 'react-native';
  
 export default function(props) {
   useState
-    const [ligado, setLigado] = useState(true)
-
+    const [ligado, setLigado] = useState(false)
+    const toggleLigado=()=>{setLigado(!ligado)} //pode usar o PrevesState -> !PrevesState
+ 
         return (
                 <View>
-
-            
                 <Text > Carro:{props.nome}  -  Ligado:{ligado? "Sim" : "Não"} </Text>
-                <Button
-                  // tanto o texto e button vai verificar o (state) estado ligado ? ai responde conforme o state
-                  title= {ligado?"desligar":"Ligar"}
-      onPress={()=>setLigado(!ligado)}   
+                <Switch
+                  // Definir cor
+                  trackColor={{false:"#777", true:"#8bf"}}
+                   thumbColor={ligado? '#00f' :'#444' }
+                   // Definir Estado ---como ligado ta true --ele vai ligar
+                   // Se mudar para false - muda 
+                   value={ligado}
+                   // AGORA MUDA O ESTADO (evento) - vamos mudar de acordo com o clique no switch 
+                   //FAz atraves de uma array function
+                   onValueChange={
+                     // SERIA ISSO ----()=>{setLigado(!ligado)}
+                     // vamos fazer por uma função que condiciona (la em cima) a toggleLigado e USAR
+                     toggleLigado
+
+                   }
+
+
+
                 />
                  </View>
         )
