@@ -1579,4 +1579,370 @@ const estilos = StyleSheet.create({
      }
   });
 
-27-------Componente Modal em React Native---AULA 22
+27-------Componente Modal em React Native---(USADO GERALMENTE PARA APRESENTAR ALGO EM CIMA(sobreposto) DA VIEW)
+--Vamos fazer o Compomentes.Modal.js
+----Vamos usar o useState, StyleSheet, Modal
+PODEMOS COLOCAR QUALQUE COISA DENTRO DA Modal
+--O Modal precisa ser formatado por varias opções
+---Precisa definir os states do botão para interagir com algo
+
+---View Modal.js
+
+import React, {useState} from 'react';
+import {View, StyleSheet, Text, Button, Modal } from 'react-native';
+
+export default function(){
+   //  Precisa definir os states do botão para interagir com algo
+const [visivel, setVisivel]=useState(true)
+
+return (
+    <View > 
+        
+        <Modal 
+        // O Modal precisa ser formatado por varias opções
+          animationType="slide"
+          transparent={true}
+          visible={visivel} // AQUI passei o valor do "state visivel" (la de cima) para a proprieda visivel
+          style={{}}  // Oestilo precisa ser aplicado na View que contem os componentes da Modal 
+        >
+ 
+            <View style={estilos.Modal}  >
+                <Text style={estilos.texto} >Com a bença do Senhor</Text>
+                <Text style={estilos.texto}>Vai dar tudo Certo</Text>
+                <Text style={estilos.texto}>Com a bença do Senhor</Text>
+            <Button  // BOTÃO FECHAR
+             title='Fechar' //  Precisa ser formatado pelo title
+             onPress={()=>{setVisivel(false)}}   // Click no fehar ao MODAL desaparece (Invisivel)
+            />
+
+            </View>
+
+        </Modal>
+        <Button  // BOTÃO Mostrar - Fora da MODAL
+             title='Mostrar' //  Precisa ser formatado pelo title
+             onPress={()=>{setVisivel(true)}}   // Click no fehar ao MODAL desaparece (Invisivel)
+            />
+    </View>
+
+);};
+
+// CRIAR UM ESTILO
+
+const estilos = StyleSheet.create({
+    Modal:{
+     backgroundColor:'#000',
+     margin:20,
+     padding:20,
+     borderRadius:20,
+     elevation:10,
+      alignItems:'center'
+    },
+     texto:{color:'#fff',   alignItems:'center'}
+    });
+  ----CHAMAR EM App.js
+  import React from "react";
+import {StyleSheet, View,  Text, SafeAreaView} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+import Modal from './componentes/Modal'
+
+export  default  function App1(){
+ return(
+
+  <SafeAreaView style={Estilos.conteiner}>
+    
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+       <Modal/>
+
+    </SafeAreaView>
+   
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+  ---Ok PERFEITO
+
+28----Componente RefreshControl em React Native 
+---EM VEZ DE APROVEITA O Rolage,.js VOU CRIAR O Atualizar.js e Repetir o conteudo do Rolage.js e continuar
+--Criar componentes.Atualizar.js
+-------Vamos usar o useState, RefreshControl
+---Vamos criar o state para indicar se o compomente esta atualizando ou não
+---DENTRO DO ScrollView vamos colocar a propiedade  RefreshControl e dentro da propieddade
+VAMOS COLOCAR NOSSO COMPONENTES RefreshControl
+
+---Atualizar.js
+mport React, {useState} from 'react';
+import {View, TextInput, Text, ScrollView, RefreshControl } from 'react-native';
+
+export default function(){
+    // Vamos criar o state para indicar se o compomente esta atualizando ou não
+const [atualizando, setAtualizando]=useState(false)
+    //  criar uma função para poder atualizar (mudar de state)- se fosse arrayfuction SERIA ASSIM
+    //const aoAtualizar=()=>{ ---O RESTO
+    //  pode ser arrayfuction , MAS VAMOS FAZER UMA FUNçÂO NORMAL
+    function aoAtualizar(){
+        setAtualizando(true); //EStou atualizando, pois agora state atualizar é TRUE, --uso ponto e virgula opcional
+        // Ao atualizar fazer a seguinte rotina (pode ser qulquer rotina)
+        // como não tenho nada para fazer , vou so mostrar o referescontrole atraves de um setTimeout numa arrayfunction
+        // depois de 3 segundo o setAtualizando fica false
+        setTimeout(() => {setAtualizando(false)}, 3000     
+        );
+
+    }
+
+    return (
+    <View style={{flex:1}}>
+        
+        <ScrollView style={{backgroundColor:'#333', padding:15,}}
+        // DENTRO DO ScrollView vamos colocar a propiedade  RefreshControl e dentro da propieddade
+        // VAMOS COLOCAR NOSSO COMPONENTES RefreshControl
+                     RefreshControl={
+                     <RefreshControl
+                     // Passar o valor do state atualizar e ver se ele esta atualizando ou não
+                     refreshing={atualizando}
+                     // Ao atualizar executar função
+                     onRefresh={aoAtualizar}
+            
+            />
+        }
+
+        >
+        
+            <Text style={{color:'#eee', fontSize:40}}>
+            O arcebispo de Pouso Alegre (MG), dom José Luiz Majella Delgado, informou em comunicado que o papa Francisco "dispensou Ernani Maia dos Reis do celibato e de todas as demais obrigações inerentes ao estado clerical e decorrentes das Sagradas Ordens".... - Veja mais em 
+            </Text>
+
+        </ScrollView>
+
+    </View>
+
+)}
+
+----CHAMAR NO App.js
+import React from "react";
+import {StyleSheet, View,  Text, SafeAreaView} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+import Rl from './componentes/Atualizar'
+
+export  default  function App1(){
+ return(
+
+  <SafeAreaView style={Estilos.conteiner}>
+    
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+       <Rl/>
+
+    </SafeAreaView>
+   
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%'
+     }
+  });
+
+----NÂO VI EFEITO xxxxxxx
+
+29-------Componente StatusBar em React Native - BARRA DE STATUS DO Compomentes
+---SOMENTE NA VIEW App.js
+import React, {useState} from "react";
+import {StyleSheet, View, Button, Pressable, Text, SafeAreaView, StatusBar} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+
+
+export  default  function App1(){
+  // Vamos criar o state para indicar o estado atual do compomente 
+// cor é o estado atual black, e setCor é como vamos mudar (interagir)
+
+ const [cor,setCor]=useState("black")
+
+ return(
+
+ <SafeAreaView style={Estilos.conteiner}>
+    
+   <StatusBar
+    // se definimos o backgroundColor="blue" como backgroundColor={cor}  
+    // Ela fica preta, pois o state dela é black
+     //backgroundColor="blue"
+     backgroundColor={cor}
+     barStyle="default"
+    
+     />  
+        <Text >Vai dar tudo Certo</Text>
+        <Text >Com a bença do Senhor</Text>
+       
+    <Button
+      title="Vermelho"
+      //setCor é como vamos mudar (interagir) atraves de uma arrayfuction ()=>{} no evento onPress={}
+      onPress={()=>{setCor("red") }}
+    
+    />
+
+<Button
+      title="Azul"
+       //setCor é como vamos mudar (interagir) atraves de uma arrayfuction ()=>{} no evento onPress={}
+       onPress={()=>{setCor("blue") }}
+    
+    />
+     <Button
+      title="Verde"
+       //setCor é como vamos mudar (interagir) atraves de uma arrayfuction ()=>{} no evento onPress={}
+       onPress={()=>{setCor("green") }}
+    
+    />
+    
+    </SafeAreaView>
+   
+);
+};
+
+const estilos = StyleSheet.create({
+  logo:{
+   width:250,
+   resizeMode:'contain'
+    
+     },
+
+     imagemfundo:{
+     flex:1,
+     resizeMode:'cover',
+     width:'100%' 
+     }
+  });
+----OK PERFEITO
+
+
+30-----Navigation em React Native #P1 (NAVEGAR ENTRE TELAS)
+---VAMOS LIMPAR App.js
+
+import React from "react";
+import {StyleSheet, View, Button,  Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+export  default  function App1(){
+  return(
+   <View>
+      <Text >Vai dar tudo Certo</Text>
+     <Text >Com a bença do Senhor</Text>
+   </View>
+  );
+};
+
+----OK VAMOS PARA Navigation
+---Olha o site oficial (https://reactnavigation.org/)--RED DOCS->GET Start
+---Precisamos instalar algunas DEPEDENCIAS
+# npm install @react-navigation/native --PULEI ESSE
+# npm install @react-navigation/native @react-navigation/stack --(instalei os dois juntos)
+# npm install react-native-screens react-native-safe-area-context
+# npm install react-native-reanimated  ---PULEI ESSA
+# npm install react-native-gesture-handler  
+# npm install @react-native-community/masked-view  ---PULEI ESSA
+
+
+-----VOLTANDO PARA A VIEW App.js COM AS DEPEDENCIAS JA INSTALADA
+VAMOS FAZER OS Import (import { NavigationContainer } from '@react-navigation/native';)
+VAMOS FAZER OS Import import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import {StyleSheet, View, Button,  Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+
+//VAMOS Criar nossa PILHA que vai receber o retorno do createStackNavigator(pilha de navegação)
+const Pilha=createStackNavigator();
+// AGORA VAMOS CRIAR NOSSAS TELAS
+//Tela HOME que vai receber como parametro navegation
+// CRIANDO uma tela HOME
+function TelaHome ({navigation}){
+  return (
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+        <Text >Tela Home</Text>
+        <Text >Tela de incial</Text>
+
+    <Button   // Atraves de um botão navegaremos para  tela CANAL
+        title="tela canal"
+        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+        onPress={()=>{navigation.navigate("Canal")}}
+    />
+   </View>
+  );
+}
+//Tela CANAL 
+// CRIANDO uma tela CANAL
+function TelaCanal ({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+                 <Text >Tela Canal</Text>
+                <Text >Tela de programação</Text>
+                <Button   // Atraves de um botão navegaremos para  tela CANAL
+                        title="tela Home"
+                        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+                        onPress={()=>{navigation.navigate("Home")}}
+                />
+                <Button   // Atraves de um botão navegaremos para  tela CANAL -----USANDO POP da PILHA
+                        title="VOLTAR"
+                        // arrayfuction vai usar o parametro navigation pelo metodo goBack e chama a tela anterior
+                        onPress={()=>{navigation.goBack()}}
+                />
+      </View>
+    );
+  }
+   
+export  default  function App1(){
+  
+ return(
+    <NavigationContainer> 
+    <Pilha.Navigator initialRouteName="TelaHome">
+    
+    <Pilha.Screen  // EXIBINDO uma tela HOME ---vai ficar um de cada vez (DEFINR A PRIMEIRA EM  <Pilha.Navigator initialRouteName="TelaHome">)
+    name="Home"
+    component={TelaHome}
+    options={{title:'Tela inicial'}}
+    />
+
+<Pilha.Screen  // EXIBINDO uma tela CANAL ---vai ficar um de cada vez
+    name="Canal"
+    component={TelaCanal}
+    options={{title:'Tela canal'}}
+    />
+
+</Pilha.Navigator>
+    
+    </NavigationContainer>
+    
+   
+);
+};
+
+--------PODE SER COMPONENTE externo
+----VAMOS CRIAR UMA TELA bo COMPONENTES
+
+????????
+
+31---Navigation em React Native #P2 - 
