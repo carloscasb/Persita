@@ -1946,3 +1946,329 @@ export  default  function App1(){
 ????????
 
 31---Navigation em React Native #P2 - 
+---VAMOS CRIAR MAIS  TELAS -  e Adicionar o componentes na nossa PILHA
+--QUANDO CHAMAR A TELA PELO NAME NO BOTÃO. PODEMOS na sequencia PASSAR paramentros PARA TELA
+--A VIEW App.js
+import React from "react";
+import {StyleSheet, View, Button,  Text} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+
+//VAMOS Criar nossa PILHA que vai receber o retorno do createStackNavigator(pilha de navegação)
+const Pilha=createStackNavigator();
+// AGORA VAMOS CRIAR NOSSAS TELAS (componentes)
+//Tela HOME que vai receber como parametro navegation
+// CRIANDO uma tela HOME
+function TelaHome ({navigation}){
+  return (
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+        <Text >Tela Home</Text>
+        <Text >Tela de incial</Text>
+
+    <Button   // Atraves de um botão navegaremos para  tela CANAL
+        title="tela canal"
+        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+        onPress={()=>{navigation.navigate("Canal")}}
+    />
+     <Button   // Atraves de um botão navegaremos para  tela CURSO
+        title="tela CURSO"
+        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+        onPress={()=>{navigation.navigate("Cursos")}}
+    />
+   </View>
+  );
+}
+//Tela CANAL 
+// CRIANDO uma tela CANAL
+function TelaCanal ({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+                 <Text >Tela Canal</Text>
+                <Text >Tela de programação</Text>
+                <Button   // Atraves de um botão navegaremos para  tela CANAL
+                        title="tela Home"
+                        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+                        onPress={()=>{navigation.navigate("Home")}}
+                />
+                <Button   // Atraves de um botão navegaremos para  tela CANAL -----USANDO POP da PILHA
+                        title="VOLTAR"
+                        // arrayfuction vai usar o parametro navigation pelo metodo goBack e chama a tela anterior
+                        onPress={()=>{navigation.goBack()}}
+                />
+      </View>
+    );
+  }
+  // CRIANDO uma tela CURSO
+  function TelaCurso({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+          <Text >Tela Curso</Text>
+         
+      <Button   // Atraves de um botão navegaremos para  tela CANAL
+          title="Tela Cursos"
+          // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+          //QUANDO CHAMAR A TELA PELO NAME NO BOTÃO. PODEMOS na sequencia PASSAR paramentros PARA TELA (outra tela) que vai receber
+          // E a TELA que VAI RECEBER TEM QUE RECEBER ALEM DO navigation, RECEBE tambem o route que tem que ser colocado em variavel
+          onPress={()=>{navigation.navigate("CursoReactNative", {
+             aulas:100, autor:"Carlos"}
+          )}}
+      />
+     </View>
+    );
+  }
+
+  // CRIANDO uma tela CURSOREACTNATIVE
+  // E a TELA que VAI RECEBER TEM QUE RECEBER ALEM DO navigation, 
+  //RECEBE tambem o route que tem que ser colocado em variavel
+  function TelaCursoReactnative({route ,navigation}){
+    // Variaveis armazenamando os paramentros recebida
+    const {aulas}=route.params;
+    const {autor}=route.params;
+    //const aulas=route.params.aulas; PODERIA SER ASSIM TAMBEM
+    //const autor=route.params.autor; PODERIA SER ASSIM TAMBEM
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+          <Text >Curso de React native</Text>
+          <Text >Curso com: {aulas} aulas do Autor {autor} </Text>
+         
+      <Button   // Atraves de um botão navegaremos para  tela CANAL
+          title="Home"
+          // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+          onPress={()=>{navigation.navigate("Home")}}
+      />
+      <Button   // Atraves de um botão navegaremos para  tela CANAL
+          title="Tela de Cursos"
+          // arrayfuction vai usar o parametro navigation pelo metodo goBack e chama a tela anterior
+          onPress={()=>{navigation.goBack()}}
+      />
+
+     </View>
+    );
+  }
+
+   
+export  default  function App1(){
+  
+ return(
+    <NavigationContainer> 
+    <Pilha.Navigator initialRouteName="TelaHome">
+    
+    <Pilha.Screen  // EXIBINDO uma tela HOME ---vai ficar um de cada vez (DEFINR A PRIMEIRA EM  <Pilha.Navigator initialRouteName="TelaHome">)
+    name="Home"
+    component={TelaHome}
+    options={{title:'Tela inicial'}}
+    />
+
+<Pilha.Screen  // EXIBINDO uma tela CANAL ---vai ficar um de cada vez
+    name="Canal"
+    component={TelaCanal}
+    options={{title:'Tela canal'}}
+    />
+
+<Pilha.Screen  //ACIONANDO NA NOSSA PILHA--- EXIBINDO uma tela CURSO ---vai ficar um de cada vez
+    name="Cursos"
+    component={TelaCurso}
+    options={{title:'Tela dos Cursos'}}
+    />
+
+<Pilha.Screen  //ACIONANDO NA NOSSA PILHA--- EXIBINDO uma tela CURSOREACTNATIVE ---vai ficar um de cada vez
+    name="CursoReactNative"
+    component={TelaCursoReactnative}
+    options={{title:'Curso de React Native'}}
+    />
+
+</Pilha.Navigator>
+    
+    </NavigationContainer>
+    
+   
+);
+};
+
+OK PERFEITO
+
+32-----Navigation em React Native #P3 - ACICIONAR CABEÇALHO E ALTERAR VISUAL
+--VAMOS TRABALHAR NA Screm QUE ESTA EM NOSSA PILHA , mais precisamente EM options
+----EM options da Screm podemos trabalha com diversos elementoos
+--POR EXEMPLO : 
+options={{
+      title:'Tela inicial',
+      headerStyle:{
+      backgroundColor:'#008'
+      },
+      headerTintColor:'#fff'
+    
+    }}
+---PODEMOS FAZER O ESTILO DO NOSSO CABEÇALHO com quisser - fica livre
+---MAS PODEMOS ADICIONAR BOTÃO --colocaremos um de alerta mas pode ser o que quisser (Bom para exibir MODAL)
+
+import React from "react";
+import {StyleSheet, View, Button,  Text, Alert} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+
+//VAMOS Criar nossa PILHA que vai receber o retorno do createStackNavigator(pilha de navegação)
+const Pilha=createStackNavigator();
+// AGORA VAMOS CRIAR NOSSAS TELAS (componentes)
+//Tela HOME que vai receber como parametro navegation
+// CRIANDO uma tela HOME
+function TelaHome ({navigation}){
+  return (
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+        <Text >Tela Home</Text>
+        <Text >Tela de incial</Text>
+
+    <Button   // Atraves de um botão navegaremos para  tela CANAL
+        title="tela canal"
+        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+        onPress={()=>{navigation.navigate("Canal")}}
+    />
+     <Button   // Atraves de um botão navegaremos para  tela CURSO
+        title="tela CURSO"
+        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+        onPress={()=>{navigation.navigate("Cursos")}}
+    />
+   </View>
+  );
+}
+//Tela CANAL 
+// CRIANDO uma tela CANAL
+function TelaCanal ({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+                 <Text >Tela Canal</Text>
+                <Text >Tela de programação</Text>
+                <Button   // Atraves de um botão navegaremos para  tela CANAL
+                        title="tela Home"
+                        // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+                        onPress={()=>{navigation.navigate("Home")}}
+                />
+                <Button   // Atraves de um botão navegaremos para  tela CANAL -----USANDO POP da PILHA
+                        title="VOLTAR"
+                        // arrayfuction vai usar o parametro navigation pelo metodo goBack e chama a tela anterior
+                        onPress={()=>{navigation.goBack()}}
+                />
+      </View>
+    );
+  }
+  // CRIANDO uma tela CURSO
+  function TelaCurso({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+          <Text >Tela Curso</Text>
+         
+      <Button   // Atraves de um botão navegaremos para  tela CANAL
+          title="Tela Cursos"
+          // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+          //QUANDO CHAMAR A TELA PELO NAME NO BOTÃO. PODEMOS na sequencia PASSAR paramentros PARA TELA (outra tela) que vai receber
+          // E a TELA que VAI RECEBER TEM QUE RECEBER ALEM DO navigation, RECEBE tambem o route que tem que ser colocado em variavel
+          onPress={()=>{navigation.navigate("CursoReactNative", {
+             aulas:100, autor:"Carlos"}
+          )}}
+      />
+     </View>
+    );
+  }
+
+  // CRIANDO uma tela CURSOREACTNATIVE
+  // E a TELA que VAI RECEBER TEM QUE RECEBER ALEM DO navigation, 
+  //RECEBE tambem o route que tem que ser colocado em variavel
+  function TelaCursoReactnative({route ,navigation}){
+    // Variaveis armazenamando os paramentros recebida
+    const {aulas}=route.params;
+    const {autor}=route.params;
+    //const aulas=route.params.aulas; PODERIA SER ASSIM TAMBEM
+    //const autor=route.params.autor; PODERIA SER ASSIM TAMBEM
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+          <Text >Curso de React native</Text>
+          <Text >Curso com: {aulas} aulas do Autor {autor} </Text>
+         
+      <Button   // Atraves de um botão navegaremos para  tela CANAL
+          title="Home"
+          // arrayfuction vai usar o parametro navigation pelo metodo navigate e chama a tela pelo name
+          onPress={()=>{navigation.navigate("Home")}}
+      />
+      <Button   // Atraves de um botão navegaremos para  tela CANAL
+          title="Tela de Cursos"
+          // arrayfuction vai usar o parametro navigation pelo metodo goBack e chama a tela anterior
+          onPress={()=>{navigation.goBack()}}
+      />
+
+     </View>
+    );
+  }
+
+   
+export  default  function App1(){
+  
+ return(
+    <NavigationContainer> 
+    <Pilha.Navigator initialRouteName="TelaHome">
+    
+    <Pilha.Screen  // EXIBINDO uma tela HOME ---vai ficar um de cada vez (DEFINR A PRIMEIRA EM  <Pilha.Navigator initialRouteName="TelaHome">)
+    name="Home"
+    component={TelaHome}
+    options={{
+      title:'Tela inicial',
+      headerStyle:{
+      backgroundColor:'#008'
+      },
+      headerTintColor:'#fff',
+      // ADICIONAR UM BOTAO PELO DIREITA E USAR UMA ARRAYFUNCTION
+      // note que esta entra a chave de parentes  
+        headerRight: () => (
+        <Button
+        onPress={() => alert('This is a button!')}
+        title="Info"
+        color="#000"
+      />
+
+      ),
+    
+    }}
+    />
+
+<Pilha.Screen  // EXIBINDO uma tela CANAL ---vai ficar um de cada vez
+    name="Canal"
+    component={TelaCanal}
+    options={{
+      title:'Tela inicial',
+      headerStyle:{
+      backgroundColor:'#008'
+      },
+      headerTintColor:'#fff', 
+      headerTitleStyle:{
+        fontSize:12
+      }
+    
+    }}
+    />
+
+<Pilha.Screen  //ACIONANDO NA NOSSA PILHA--- EXIBINDO uma tela CURSO ---vai ficar um de cada vez
+    name="Cursos"
+    component={TelaCurso}
+    options={{title:'Tela dos Cursos'}}
+    />
+
+<Pilha.Screen  //ACIONANDO NA NOSSA PILHA--- EXIBINDO uma tela CURSOREACTNATIVE ---vai ficar um de cada vez
+    name="CursoReactNative"
+    component={TelaCursoReactnative}
+    options={{title:'Curso de React Native'}}
+    />
+
+</Pilha.Navigator>
+    
+    </NavigationContainer>
+    
+   
+);
+};
+
+---OK PERFEITO
+
+33----AULA 28
