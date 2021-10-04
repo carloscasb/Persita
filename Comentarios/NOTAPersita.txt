@@ -1941,6 +1941,9 @@ export  default  function App1(){
 };
 
 --------PODE SER COMPONENTE externo
+---AS TELAS PODEM SER FEITA SEPARADAMENTE (EXTERNA) --quando fizer isso faz a tela exatamente como esta aqui
+e abre lá em componentes.TelaCanal.js (exemplo) e chama em App,js dando o import (import TelaCanal from './componentes/TelaCanal)
+e chama la na Guias.Screen com o nome (component={TelaCanal})
 ----VAMOS CRIAR UMA TELA bo COMPONENTES
 
 ????????
@@ -2089,7 +2092,7 @@ export  default  function App1(){
 
 OK PERFEITO
 
-32-----Navigation em React Native #P3 - ACICIONAR CABEÇALHO E ALTERAR VISUAL
+32-----Navigation em React Native #P3 - ADICIONAR CABEÇALHO E ALTERAR VISUAL -- NAVEGAÇÃO EM PILHAS
 --VAMOS TRABALHAR NA Screm QUE ESTA EM NOSSA PILHA , mais precisamente EM options
 ----EM options da Screm podemos trabalha com diversos elementoos
 --POR EXEMPLO : 
@@ -2271,4 +2274,367 @@ export  default  function App1(){
 
 ---OK PERFEITO
 
-33----AULA 28
+33----Navigation em React Native #P4 TabNavigation 
+---INSTALAR MAS UMA DEPENDENCIA BOTTOM_TABS
+# npm install @react-navigation/bottom-tabs  
+
+---VAMOS NAVEGAR POR ABAS --VOU MODIFICA O App.js o createBottomTabNavigator e a pilha 
+por Guias (ABAS)
+---A CRIAÇÃO DA TELAS PERMANENCE DO MESMO JEITO
+---NAS TELAS OS BOTÕES FICAM OPCIONAILS (VOU TIRAR) --PODERIA FICAR E TER AS DUAS FORMAS DE NAVEGAÇÃO
+---TROCAR DE Pilha.Navigator e PILHAS.SCREEN PARA Guias.Navigator e GUIAS.SCREEN repectivamente
+---AS TELAS PODEM SER FEITA SEPARADAMENTE (EXTERNA) --quando fizer isso faz a tela exatamente como esta aqui
+e abre lá em componentes.TelaCanal.js (exemplo) e chama em App,js dando o import (import TelaCanal from './componentes/TelaCanal)
+e chama la na Guias.Screen com o nome (component={TelaCanal})
+
+import React from "react";
+import {StyleSheet, View, Button,  Text, Alert} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import { NavigationContainer } from "@react-navigation/native";
+
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; 
+
+//VAMOS Criar nossa ABA(guias) que vai receber o retorno do createBottomTabNavigator(pilha de navegação)
+const Guias=createBottomTabNavigator();
+// AGORA VAMOS CRIAR NOSSAS TELAS (componentes)
+//Tela HOME que vai receber como parametro navegation
+// CRIANDO uma tela HOME
+function TelaHome ({navigation}){
+  return (
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+        <Text >Tela Home</Text>
+        <Text >Tela de incial</Text>
+
+  
+   </View>
+  );
+}
+//Tela CANAL 
+// CRIANDO uma tela CANAL
+function TelaCanal ({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+                 <Text >Tela Canal</Text>
+                <Text >Tela de programação</Text>
+      </View>
+    );
+  }
+  // CRIANDO uma tela CURSO
+  function TelaCurso({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+          <Text >Tela Curso</Text>
+     </View>
+    );
+  }
+
+ 
+   
+export  default  function App1(){
+  
+ return(
+    <NavigationContainer> 
+    <Guias.Navigator initialRouteName="TelaHome">
+    
+    <Guias.Screen  // EXIBINDO uma tela HOME ---vai ficar um de cada vez (DEFINR A PRIMEIRA EM  <Pilha.Navigator initialRouteName="TelaHome">)
+    name="Home"
+    component={TelaHome}
+    options={{
+      title:'Tela inicial',
+      headerStyle:{
+      backgroundColor:'#008'
+      },
+      headerTintColor:'#fff',
+      // ADICIONAR UM BOTAO PELO DIREITA E USAR UMA ARRAYFUNCTION
+      // note que esta entra a chave de parentes  
+        headerRight: () => (
+        <Button
+        onPress={() => {alert('This is a button!')}}
+        title="Info"
+        color="#000"
+      />
+
+      ),
+    
+    }}
+    />
+
+<Guias.Screen  // EXIBINDO uma tela CANAL ---vai ficar um de cada vez
+    name="Canal"
+    component={TelaCanal}
+    options={{
+      title:'Tela Canal',
+      headerStyle:{
+      backgroundColor:'#008'
+      },
+      headerTintColor:'#fff', 
+      headerTitleStyle:{
+        fontSize:12
+      }
+    
+    }}
+    />
+
+<Guias.Screen  //ACIONANDO NA NOSSA PILHA--- EXIBINDO uma tela CURSO ---vai ficar um de cada vez
+    name="Cursos"
+    component={TelaCurso}
+    options={{title:'Tela dos Cursos'}}
+    />
+</Guias.Navigator>
+    
+    </NavigationContainer>
+);
+};
+
+---OK PERFEITO
+
+34 -----Navigation em React Native #P5 DrawerNavigation (DESLIZAR TELA)
+-----INSTALAR O @react-navigation/drawer
+# npm install @react-navigation/drawer
+---VAMOS MUDAR O TIPO DE NAVEGADOR no App.js VAMOS USAR 
+---AS TELAS CONTINIAM AS MESMAS
+---NO LUGAR DE GUIA VAMOS COLOCAR GAVETAS
+---AS TELAS PODEM SER FEITA SEPARADAMENTE (EXTERNA) --quando fizer isso faz a tela exatamente como esta aqui
+e abre lá em componentes.TelaCanal.js (exemplo) e chama em App,js dando o import (import TelaCanal from './componentes/TelaCanal)
+e chama la na Guias.Screen com o nome (component={TelaCanal})
+---DEU ERRO TIVEMOS QUE CARREGAR NOVAMENTE (instalação de depemdencias)
+---Precisou instalar - reanimated
+
+# npm install react-native-reanimated
+
+import React from "react";
+import {StyleSheet, View, Button,  Text, Alert} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import { NavigationContainer } from "@react-navigation/native";
+//import { createStackNavigator } from "@react-navigation/stack";
+//import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"; 
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+//VAMOS Criar nossa Gavetas que vai receber o retorno do createDrawerNavigator( navegação em gavetas)
+const Gavetas=createDrawerNavigator();
+// AGORA VAMOS CRIAR NOSSAS TELAS (componentes)
+//Tela HOME que vai receber como parametro navegation
+// CRIANDO uma tela HOME
+function TelaHome ({navigation}){
+  return (
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+        <Text >Tela Home</Text>
+        <Text >Tela de incial</Text>
+   </View>
+  );
+}
+//Tela CANAL 
+// CRIANDO uma tela CANAL
+function TelaCanal ({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+                 <Text >Tela Canal</Text>
+                <Text >Tela de programação</Text>
+      </View>
+    );
+  }
+  // CRIANDO uma tela CURSO
+  function TelaCurso({navigation}){
+    return (
+      <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+          <Text >Tela Curso</Text>
+     </View>
+    );
+  }
+
+ 
+   
+export  default  function App1(){
+  
+ return(
+    <NavigationContainer> 
+    <Gavetas.Navigator initialRouteName="TelaHome">
+    
+    <Gavetas.Screen  // EXIBINDO uma tela HOME ---vai ficar um de cada vez (DEFINR A PRIMEIRA EM  <Pilha.Navigator initialRouteName="TelaHome">)
+    name="Home"
+    component={TelaHome}
+    options={{
+      title:'Tela inicial',
+      headerStyle:{
+      backgroundColor:'#008'
+      },
+      headerTintColor:'#fff',
+      // ADICIONAR UM BOTAO PELO DIREITA E USAR UMA ARRAYFUNCTION
+      // note que esta entra a chave de parentes  
+        headerRight: () => (
+        <Button
+        onPress={() => {alert('This is a button!')}}
+        title="Info"
+        color="#000"
+      />
+
+      ),
+    
+    }}
+    />
+
+<Gavetas.Screen  // EXIBINDO uma tela CANAL ---vai ficar um de cada vez
+    name="Canal"
+    component={TelaCanal}
+    options={{
+      title:'Tela Canal',
+      headerStyle:{
+      backgroundColor:'#008'
+      },
+      headerTintColor:'#fff', 
+      headerTitleStyle:{
+        fontSize:12
+      }
+    
+    }}
+    />
+
+<Gavetas.Screen  //ACIONANDO NA NOSSA PILHA--- EXIBINDO uma tela CURSO ---vai ficar um de cada vez
+    name="Cursos"
+    component={TelaCurso}
+    options={{title:'Tela dos Cursos'}}
+    />
+</Gavetas.Navigator>
+    
+    </NavigationContainer>
+);
+};
+----Precisou instalar - reanimated
+
+# npm install react-native-reanimated
+
+35-------Variáveis Static Globais 
+---LIMPEI O App1.js
+---PRECISAMOS PASSAR VALOR POR paramentros
+---FAZER UM ARQUIVO DE VARIAVEIS GLOBAIS PARA SEREM REAPROVEITAVEIS
+---TEMOS QUE TRABALHAR COM MODO CLASSE POIS VAMOS TRABALHAR COM JAVA
+---CRIAR ARQUIVO EM COMPONENTES componentes.Globais.js
+class Globais{
+ static nome="Carlos"
+ static canal="HDC Tecnologia"
+ static num=2021
+ }
+
+ export default Globais;
+
+ ----E CHAMAR NO App1.js , Import do componente GLOBAIS (import Globais from "./componentes/Globais.js";)
+ ---LEMBRABSO QUE TEMOS QUE TRABALHAR COM CLASSE
+import React, {Component} from "react";
+import {StyleSheet, View, Button,  Text, Alert} from 'react-native';
+import Estilos from './estilos/Estilos.js';
+import Globais from "./componentes/Globais.js";
+
+/*
+export default function App1(){
+  return (
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+        <Text >Tela Home</Text>
+        <Text >Tela de incial</Text>
+   </View>
+  );
+}
+*/
+
+export default class App1 extends Component{
+  //RECEBE na variaveis nome a variaveis Global nome do componete Globais.js
+  nome=Globais.nome
+  numero=Globais.num
+  canal=Globais.canal
+
+
+  render(){
+
+return (
+// tem que colocar this pois é uma classe
+      <View>
+            <Text>{this.nome}</Text> 
+            <Text>{this.canal}</Text> 
+            <Text>{this.numero}</Text> 
+
+      </View>
+
+);
+}
+}
+
+
+--Ok PERFEITO
+
+36-----CRIAR APLICATIVO IMC - VAMOS FAZER AQUI MESMO
+---LIMPANDO TUDO -- App.js
+import React, {Component} from "react";
+import {StyleSheet, Button,  Text, SafeAreaView} from 'react-native';
+
+
+
+export default function Calcimc(){
+  return (
+    <SafeAreaView  >
+      
+   </SafeAreaView>
+  );
+}
+
+
+const estilos = StyleSheet.create({
+  
+ });
+
+ --------VAMOS FAZER TODOS COMPONENTE AQUI E NO FINAL REFATORAR
+ ---Vamos trabalhar co state pois vamos interagir com objetos, então import a useState
+---Precisaremos de tres variaveis então será tres state (peso, altura e resultado)
+  
+
+
+  AQUI ESTOU
+import React, {useState} from "react";
+import {StyleSheet, TouchableHighlight, View, Text, SafeAreaView, TextInput} from 'react-native';
+
+
+//
+/**/
+
+
+
+export default function Calcimc(){
+//Precisaremos de tres variaveis então será tres state (peso, altura e resultado)
+const [peso, setPeso]=useState(0)
+const [altura, setAltura]=useState(0)
+const [resultado, setResultado]=useState(0)
+
+
+  return (
+    //Precisamos de uma TextInput para colocar o peso, colocaremos demtro de uma view
+    <SafeAreaView>
+      <Text>Calculadora de IMC</Text> 
+      <View>
+      <Text>Informe seu Peso</Text> 
+      <TextInput 
+      autoFocus={true}
+      keyboardType={'numeric'}
+       //value={peso}
+      //Passaar o valor digtadopara a caixa de texto atraves de uma arrayfunction
+      onChangeText={text=>setPeso(text)}
+      ></TextInput>  
+      </View>
+      <View>
+      <Text>Informe Sua altura</Text> 
+      <TextInput 
+      autoFocus={false}
+      keyboardType={'numeric'}
+      // value={altura}
+      //Passaar o valor digtado para a caixa de texto atraves de uma arrayfunction (propriedade  onChangeText)
+      // o texto digitado alterar o state (muda o valor do estado)
+      onChangeText={text=>setAltura(text)}
+      ></TextInput>  
+      </View>
+   </SafeAreaView>
+  );
+}
+
+
+const estilos = StyleSheet.create({
+  
+ });
+
+ ------
