@@ -2712,7 +2712,90 @@ const estilos = StyleSheet.create({
 
 39----AsyncStorage, armazenamento local (chave,valor) )PULEI VARIOS APLICATIVOS
 
----PRIMEIRA TEMOS QUE INSTALAR A FEPENDENCIA DO AsyncStorage
+---PRIMEIRA TEMOS QUE INSTALAR A DEPENDENCIA DO AsyncStorage
 
 # npm install @react-native-community/async-storage   --DEU ERRO COMO SEMPRE, QUEBREI A DEPENDENCIA A FORÇA 
 # npm install @react-native-community/async-storage --force ---USEI ESSA
+
+--VOU LIMPAR TODO O APP
+import React from "react";
+import { StyleSheet,  View, Text} from 'react-native';
+
+export default function App1(){
+
+  return (
+        
+      <View >
+      <Text>Informe Sua altura</Text> 
+      </View>
+ );
+}
+
+const estilos = StyleSheet.create({
+
+});
+
+-------------------------------------------
+---EM App1 Importar o AsyncStorage lÁ EM CIMA
+import AsyncStorage from "@react-native-community/async-storage";
+
+--VAMOS USAR STATE então DECLARAMOS useState
+import React, {useState} from "react";
+import { StyleSheet,  View, Text} from 'react-native';
+import AsyncStorage from "@react-native-community/async-storage";
+//POSO CRIAR QUANTOS STORAGE QUISER
+import A_Curso from "@react-native-community/async-storage";
+
+export default function App1(){
+  // CRIAR um state curso
+const [curso, setCurso]=useState(null)
+  // CRIAR uma função (arrayfuction) de Aramzenamento(GRAVAR) com o nome Armazenar, pasando chave e valor
+const Armazenar = (chave, valor)=>{
+  //ARMAZENA ITEM
+  AsyncStorage.setItem(chave, valor)
+}
+// CRIAR uma função (arrayfuction) com o nome Buscar, para BUSCAR -- Quero um valor atraves de uma chave
+const Buscar = async (chave)=>{
+  //ESPERAR do meu asynsc storage o retorno desta chave 
+   const valor = await AsyncStorage.getItem(chave)
+   //COLOCAR O Valor recebido dentro do State curso
+   setCurso(valor)
+   // OU PODE SER UM return, depende do que quero fazer com o valor
+  // return valor
+
+}
+
+ // VAMOS ARMAZENAR (chama a função que criamos --Armazenar ou AsyncStorage.setItem(chave, valor) )
+ Armazenar('01', 'React-native')
+ Armazenar('02', 'React-Natal')
+ Armazenar('03', 'Amazonas')
+
+ // VAMOS BUSCAR
+ Buscar('01')
+
+  return (
+        // VOU COLOCAR AQUI DENTRO DE UM TEXT
+      <View >
+
+
+      <Text>Curso: {curso}</Text> 
+      </View>
+
+  
+  );
+}
+
+
+const estilos = StyleSheet.create({
+
+});
+
+40---Geolocalização 
+
+
+41---Fetch API
+
+
+42---ICONE
+
+43-----
