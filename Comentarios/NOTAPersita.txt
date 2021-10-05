@@ -2564,52 +2564,51 @@ return (
 ---LIMPANDO TUDO -- App.js
 import React, {Component} from "react";
 import {StyleSheet, Button,  Text, SafeAreaView} from 'react-native';
-
-
-
-export default function Calcimc(){
-  return (
-    <SafeAreaView  >
-      
-   </SafeAreaView>
-  );
-}
-
-
-const estilos = StyleSheet.create({
-  
- });
-
- --------VAMOS FAZER TODOS COMPONENTE AQUI E NO FINAL REFATORAR
- ---Vamos trabalhar co state pois vamos interagir com objetos, então import a useState
----Precisaremos de tres variaveis então será tres state (peso, altura e resultado)
-  
-
-
-  AQUI ESTOU
+--ESTILO NA PROPEIA PAGINA
+.
+.
+.
 import React, {useState} from "react";
-import {StyleSheet, TouchableHighlight, View, Text, SafeAreaView, TextInput} from 'react-native';
-
-
-//
-/**/
-
-
+import {Alert, StyleSheet, TouchableHighlight, View, Text, SafeAreaView, TextInput, Image, ImageComponent} from 'react-native';
 
 export default function Calcimc(){
 //Precisaremos de tres variaveis então será tres state (peso, altura e resultado)
 const [peso, setPeso]=useState(0)
 const [altura, setAltura]=useState(0)
 const [resultado, setResultado]=useState(0)
+//PRECISAMOS DE UMA FUNÇÃO PARA CALCULAR
+// PODE SER POR UMA FUNCTION NOMAL -----   function Calcimc (){}
+// VAMOS FAZER POR arrayfunction ------     const Calcimc = ()=>{}
 
+const Calcimc = ()=>{
+  //VALIDAÇÃO Se tm valores
+  // se peso for zero OU (||) não tiver peso
+  if (peso==0 || !peso){
+    alert('Informe o peso')
+    return
+  }
+  if (altura==0 || !altura){
+    alert('Informe a altura')
+    return
+  }
+  // se chegou até aqui calcular resultado
+ const r = peso/(altura*altura) // OU USAR 
+ // const r = peso/(Math.pow(altura,2))
+ // Colocaremos o resultado em setResultado (poderia ser feito direto)
+ // toFixed (1)---porque o numero é grande, ai fixamos em 1 casa decimal
+ setResultado(r.toFixed(1))
+ //AGORA VAMOS USAR A FUNÇÂO (Calcimc) NO NOSSO TouchableHighlight na propriedade onPress em uma arrayfuction
+}
 
   return (
     //Precisamos de uma TextInput para colocar o peso, colocaremos demtro de uma view
-    <SafeAreaView>
+    <SafeAreaView style={estilos.corpo}>
+      <View style={estilos.bloco} >
       <Text>Calculadora de IMC</Text> 
-      <View>
+      </View>
+      <View style={estilos.bloco} >
       <Text>Informe seu Peso</Text> 
-      <TextInput 
+      <TextInput  style={estilos.txt}
       autoFocus={true}
       keyboardType={'numeric'}
        //value={peso}
@@ -2617,9 +2616,9 @@ const [resultado, setResultado]=useState(0)
       onChangeText={text=>setPeso(text)}
       ></TextInput>  
       </View>
-      <View>
+      <View style={estilos.bloco} >
       <Text>Informe Sua altura</Text> 
-      <TextInput 
+      <TextInput style={estilos.txt}
       autoFocus={false}
       keyboardType={'numeric'}
       // value={altura}
@@ -2628,6 +2627,30 @@ const [resultado, setResultado]=useState(0)
       onChangeText={text=>setAltura(text)}
       ></TextInput>  
       </View>
+      <View style={estilos.bloco} >
+        <TouchableHighlight 
+        style={estilos.btncalc}
+        // uma arrayfuction Para poder chamar o resultado de nossa funcão Calcular(Calcimc)
+        onPress={()=>{Calcimc()}}
+        >
+        <Text  style={estilos.txtBtn}>Calcular de IMC</Text> 
+        </TouchableHighlight>
+        
+      </View >
+      <View style={estilos.bloco}
+      // Mostrar o valor do nosso Stade resultado
+      >
+      
+      <Text > Mostrar o valor do nosso Stade resultado--Resultado do IMC: {resultado} </Text> 
+      </View>
+    
+      <View style={estilos.bloco}>
+       <Image
+       source={require('./assets/imagens/IMC.png')}
+        style={estilos.tabela}
+      />
+      </View>
+
    </SafeAreaView>
   );
 }
@@ -2635,6 +2658,61 @@ const [resultado, setResultado]=useState(0)
 
 const estilos = StyleSheet.create({
   
+  corpo:{
+
+    padding:10
+  },
+
+  bloco:{
+    marginBottom:20
+  },
+
+  txt:{
+    width:'100%',
+    borderWidth:1,
+    borderColor:'#000',
+    borderRadius:20,
+    padding:10
+      },
+
+      btncalc:{
+          backgroundColor:'#048',
+          alignItems:'center',
+          justifyContent:'center',
+          padding:20,
+          borderRadius:30
+
+      },
+
+      txtBtn:{
+        color:'#fff',
+        fontSize:15,
+        textTransform:'uppercase'
+
+      }, 
+      tabela:{
+        width:'100%',
+        resizeMode:'contain',
+        marginTop:57
+
+
+      }
  });
 
- ------
+ ----OK PERFEITO
+
+37-----Refatorando o primeiro App em React Native 00DIVIDIR EM PARTES
+
+---PREGUIÇA ... MAS O SEGUNDO SEGUE O FORMATO
+
+38 ---Criando Segundo App em React Native - Parte 1  ---QUAL MELHOR PREÇO (alcool, gasolina)
+.
+.
+.
+
+39----AsyncStorage, armazenamento local (chave,valor) )PULEI VARIOS APLICATIVOS
+
+---PRIMEIRA TEMOS QUE INSTALAR A FEPENDENCIA DO AsyncStorage
+
+# npm install @react-native-community/async-storage   --DEU ERRO COMO SEMPRE, QUEBREI A DEPENDENCIA A FORÇA 
+# npm install @react-native-community/async-storage --force ---USEI ESSA
