@@ -2564,7 +2564,7 @@ return (
 ---LIMPANDO TUDO -- App.js
 import React, {Component} from "react";
 import {StyleSheet, Button,  Text, SafeAreaView} from 'react-native';
---ESTILO NA PROPEIA PAGINA
+--ESTILO NA PROPRIA PAGINA
 .
 .
 .
@@ -2701,10 +2701,116 @@ const estilos = StyleSheet.create({
 
  ----OK PERFEITO
 
-37-----Refatorando o primeiro App em React Native 00DIVIDIR EM PARTES
+37-----Refatorando o primeiro App em React Native --DIVIDIR EM PARTES
 
----PREGUIÇA ... MAS O SEGUNDO SEGUE O FORMATO
+----FAZER AS TELAS como componentes SEPARADAMENTE
+---Componentes/peso.js
+import React from "react";
+import { StyleSheet,  View, Text, TextInput} from 'react-native';
+//Vamos ter que passar props que esse componente esta relacionado
+export default props=>{
+    return (
+        <View style={estilos.bloco} >
+        <Text>Informe seu Peso</Text> 
+        <TextInput  style={estilos.txt}
+        autoFocus={true}
+        keyboardType={'numeric'}
+         //value={peso}
+        //Passaar o valor digtado para a caixa de texto atraves de uma arrayfunction 
+        //onChangeText={text=>setPeso(text)}
+        //RECEBER o valor por propriedade da views App.js enttão temos que capturar por (props) antes da propriedade aoModificar
+        
+        onChangeText={text=>props.aoModificar(text)}
+        ></TextInput>  
+        </View>
 
+    )
+
+}
+
+const estilos = StyleSheet.create({
+      bloco:{
+      marginBottom:20
+    },
+  
+    txt:{
+      width:'100%',
+      borderWidth:1,
+      borderColor:'#000',
+      borderRadius:20,
+      padding:10
+        }
+         
+   });
+
+
+---Componentes/Altura.js
+
+import React from "react";
+import { StyleSheet,  View, Text, TextInput} from 'react-native';
+
+
+
+//Vamos ter que passar props que esse componente esta relacionado
+export default props=>{
+    return (
+        <View style={estilos.bloco} >
+        <Text>Informe Sua altura</Text> 
+        <TextInput style={estilos.txt}
+        autoFocus={false}
+        keyboardType={'numeric'}
+        // value={altura}
+        //Passaar o valor digtado para a caixa de texto atraves de uma arrayfunction (propriedade  onChangeText)
+        // o texto digitado alterar o state (muda o valor do estado)
+        onChangeText={text=>props.aoModificar(text)}
+        ></TextInput>  
+        </View>
+
+    )
+
+}
+
+const estilos = StyleSheet.create({
+      bloco:{
+      marginBottom:20
+    },
+  
+    txt:{
+      width:'100%',
+      borderWidth:1,
+      borderColor:'#000',
+      borderRadius:20,
+      padding:10
+        }
+  
+     
+        
+   });
+-------PAGINA App.js
+import React, {useState} from "react";
+import { StyleSheet,  View, Text} from 'react-native';
+import Peso from './componentes/views/peso'
+import Altura from './componentes/views/altura'
+
+export default function App1(){
+  const [peso, setPeso]=useState(0)
+  const [altura, setAltura]=useState(0)
+const [resultado, setResultado]=useState(0)
+  return (
+         //  RECEBER A props setPeso pela propriedade aoModificar para views  peso.js aoModificar={setPeso}
+          //e la captirar co (props.aoModificar)
+      <View >
+     
+      <Peso aoModificar={setPeso}/>
+      <Altura aoModificar={setAltura}/>
+      </View>
+ );
+}
+
+---ESTOU CO PREGUIÇA, MA É SO DIVIDIR O PROJETO EM COMPONENTES
+.
+.
+.
 38 ---Criando Segundo App em React Native - Parte 1  ---QUAL MELHOR PREÇO (alcool, gasolina)
 .
 .
@@ -2799,3 +2905,275 @@ const estilos = StyleSheet.create({
 42---ICONE
 
 43-----
+
+
+M1-----Mapas e Rotas -CSS  ===APP ROTA
+COMEÇA DO ZERO e CSS A PARTES
+--CRIAR EM assets->css->Css.js
+import { StyleSheet } from "react-native";
+
+
+ const css = StyleSheet.create({
+
+    container:{
+        flex:1,
+        backgroundColor:'#0ff',
+        alignItems:'center',
+        justifyContent:'center'
+    }
+
+});
+export  default (css);
+
+--CHAMAR NO App.js
+import React from "react";
+import { StyleSheet,  View, Text} from 'react-native';
+import css from './assets/css/Css';
+
+export default function App1(){
+   return (
+       
+      <View style={css.container} >
+      <Text>Curso: </Text> 
+      </View>
+ 
+  );
+}
+
+--OK PERFEITO - feita a caixa
+
+
+-----CUSTOMIZAR TIPO UBER
+
+
+------ INSTALAR O MAPVIEW ---DOCUMENTAÇÃO (https://github.com/react-native-maps/react-native-maps)
+# npm install react-native-maps --save-exact
+
+--E IMPORTAR ---import MapView from 'react-native-maps'; em App.js
+
+---subustituir View Por MAPVIEW
+import React from "react";
+import { StyleSheet,  View, Text} from 'react-native';
+import css from './assets/css/Css';
+import MapView from 'react-native-maps';
+
+export default function App1(){
+   return (
+       //  Duas View dentro da view container 60 e 40 porcento
+      <View style={css.container} >
+   
+
+     <MapView 
+     style={css.map}
+     initialRegion={{
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }}
+    >
+     </MapView>
+     
+
+     <View style={css.search} >
+     
+      </View>
+      
+     
+      </View>
+      
+ 
+  );
+}
+
+---DEU ERRADO (acho que precisa EXPO)
+
+
+BD1---BD Sqligfe
+---FAZ UM BD uff8_genaral_ci
+---Instalar Squilfe
+# npm install --save sequelize
+
+---VER DOCUMENTAÇÂO
+---VAMOS EM MENU ->migration
+# npm install --save-dev sequelize-cli
+--E DEPOIS RODA O COMANDO PARA INICIAR (uso)
+# npx sequelize-cli init
+
+---VAI CRIAR NO PROJETO AS PASTAS DE migration, moldels, seedrs e config 
+---NA DOCUMENTAÇÃO TEM COMO CRIARMOS NOSSA moldels
+ // npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+-- --Vamos mudar o nosso MIGRATIONS E models  User
+#  npx sequelize-cli model:generate --name User --attributes name:string,password:string,email:string,balance:float
+
+-- --Vamos mudar o nosso MIGRATIONS models  Pokemon
+#  npx sequelize-cli model:generate --name Pokemon --attributes name:string,price:float,image:string,userId:integer 
+
+--VAMOS FAZER UMA CHAVE ESTRANGEIRA NA MIGRATIONS Pokemon
+--VAMOS LA EM MIGRATIONS Pokemon->UserId e dix que ela faz referencia ao id da tabela Users
+
+@ userId: {
+        type: Sequelize.INTEGER,
+        references:{
+          model:'users',
+          key:'id'
+        },
+         onUpdate:'cascade',
+         onDelete:'cascade'
+---AGORA PODE RODAR A Migrate de ja CRIA AS TABELAS    
+# npx sequelize-cli db:migrate
+
+----DEU ERRO() Please install mysql2 package manually)
+
+--INSTALEI O PACOTE mysql2
+# npm install -g mysql2
+# npm install mysql2 --save
+
+---ERREI NO NOME DO BD 
+
+-----OK PERFEITO CROIU AS TABELAS
+
+--VAMOS NA MODEL USER (um USUARIO PODE TER VARIOS POKEMON) E FAZ O RELACIONAMENTO
+
+ @ static associate(models) {
+      User.hasMany(models.Pokemon);
+    }
+
+--JA CADA Pokemon SÓ PODE TER UM USUARIO
+static associate(models) {
+      Pokemon.belongsTo(models.User);
+}
+BD2---RECRIAREMOS AS ViEW DE NAVEGAÇÂO EM PILHA  (lembrando que ja instalamos as dependencias)
+
+ --CONSTRUIREMOS PAGINAS EM VIEW ->assets
+ --PAGINA HOME --(assets->views->Home.js)
+ import React, {useEffect} from "react";
+import { StyleSheet,  View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
+import css from "../css/Css";
+import Cadastro from "./Cadastro";
+// RECEBE como paramentro o navigation
+export default function Home({navigation}) {
+
+  return (
+      <View style={css.container}>
+
+          <View style={css.header}>
+              <Image style={css.header__img} source={require('../../assets/imagens/hdc8.png')} />
+          </View>
+
+          <View style={css.footer}>
+
+              <TouchableOpacity
+                      style={css.button}
+                      onPress={()=>navigation.navigate('Cadastro')}
+              >
+                  <Text style={css.button__text}>Cadastro</Text>
+              </TouchableOpacity>
+          </View>
+      </View>
+  );
+}
+--PAGINA App.js --(FICA ASSIm --AINDA NÃO TEMOS A TELA DE CADASTRO)
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from "./assets/views/Home";
+import Cadastro from './assets/views/Cadastro';
+
+export default function App() {
+  //VAMOS Criar nossa PILHA que vai receber o retorno do createStackNavigator(pilha de navegação)
+    const Stack = createStackNavigator();
+
+    return (
+       //VAMOS Criar Container, o Navegador e as Telas de navegação
+      <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
+            <Stack.Screen name="Cadastro" component={Cadastro} options={{headerShown:false}} />
+         
+          </Stack.Navigator>
+      </NavigationContainer>
+    );
+}
+ --PAGINA CADASTRO --(assets->views->Cadastro.js)
+ import React,{useState,useEffect} from 'react';
+//import config from "../config/config.json";
+import {Image, Keyboard, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
+import css from "../css/Css";
+import Home from './Home';
+
+export default function Cadastro({navigation}) {
+    // CRIAR state
+    const [user,setUser]=useState(null);
+    const [password,setPassword]=useState(null);
+    const [email,setEmail]=useState(null);
+
+    //Envia os dados do formulário para o backend
+    async function registerUser()
+    {
+        let reqs = await fetch(config.urlRootNode+'create',{
+            method: 'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                nameUser: user,
+                passwordUser: password,
+                emailUser: email
+            })
+        });
+    }
+
+    return (
+        <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+            <View style={css.container}>
+           
+                <View style={css.header}>
+                    <Image style={css.header__img} source={require('../../assets/imagens/gasolina.png')} />
+                </View>
+
+                <View style={css.footer}>
+                    <TextInput
+                            style={css.input}
+                            placeholder="Digite seu nome"
+                            //MODIFICAR TEXTO
+                            onChangeText={(text)=>setUser(text)}
+                    />
+
+                    <TextInput
+                            style={css.input}
+                            placeholder="Digite seu email"
+                            //MODIFICAR TEXTO
+                            onChangeText={(text)=>setEmail(text)}
+                    />
+
+                    <TextInput
+                            style={css.input}
+                            placeholder="Digite a senha:"
+                            secureTextEntry={true}
+                            //MODIFICAR TEXTO
+                            onChangeText={(text)=>setPassword(text)}
+                    />
+
+                    <TouchableOpacity style={css.button} onPress={registerUser}>
+                        <Text style={css.button__text}>Enviar</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </TouchableWithoutFeedback>
+    );
+}
+ --PAGINA Index --(assets->views->index.js)
+
+ VZAZIA
+
+ -----
+
+
+
+
+
+    
+
